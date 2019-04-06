@@ -12,6 +12,7 @@ function App() {
     ['', '', '']
   ]);
   const [winner, setWinner] = useState('');
+  const [firstPlayerActive, setFirstPlayerActive] = useState(true);
 
   const handleNewGame = (player1, player2) => {
     setPlayer1(player1);
@@ -19,11 +20,12 @@ function App() {
   };
   const handleCellClicked = (rowIndex, colIndex) => {
     const _board = board.map(row => [...row]);
-    _board[rowIndex][colIndex] = 'X';
+    _board[rowIndex][colIndex] = firstPlayerActive ? 'X' : 'O';
     if (gameStatus(_board) === 'X') {
       setWinner('X');
     }
     setBoard(_board);
+    setFirstPlayerActive(!firstPlayerActive);
   };
 
   return (
