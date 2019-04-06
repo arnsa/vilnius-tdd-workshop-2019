@@ -23,7 +23,7 @@ test('should show "X" after first player click', async () => {
   expect(await getACellAt(0)).toBe('X');
 });
 
-test('"X" should win the game', async () => {
+test('"X" should win the game in first row', async () => {
   const player1 = 'Yaniv';
   const player2 = 'Computer';
 
@@ -41,7 +41,7 @@ test('"X" should win the game', async () => {
   expect(await getWinnerMessage()).toBe(`${player1} won!!`);
 });
 
-test('"O" should win the game', async () => {
+test('"O" should win the game in first row', async () => {
   const p1 = 'A';
   const p2 = 'B';
 
@@ -54,8 +54,27 @@ test('"O" should win the game', async () => {
   expect(await hasWinner()).toBe(false);
   await clickACellAt(4);
   await clickACellAt(1);
-  await clickACellAt(5);
+  await clickACellAt(7);
   await clickACellAt(2);
+
+  expect(await getWinnerMessage()).toBe(`${p2} won!!`);
+});
+
+test('"O" should win the game in middle row', async () => {
+  const p1 = 'A';
+  const p2 = 'B';
+
+  await navigate();
+
+  await newGame(p1, p2);
+
+  await clickACellAt(0);
+  await clickACellAt(3);
+  expect(await hasWinner()).toBe(false);
+  await clickACellAt(1);
+  await clickACellAt(4);
+  await clickACellAt(7);
+  await clickACellAt(5);
 
   expect(await getWinnerMessage()).toBe(`${p2} won!!`);
 });
