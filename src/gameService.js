@@ -1,10 +1,10 @@
 import { GAME_STATUSES } from './gameService.const';
 
-function hasWonInRow({ row, marker }) {
+export function hasWonInRow({ row, marker }) {
   return row.every(cell => cell === marker);
 }
 
-function hasWonInAnyRow({ board, marker }) {
+export function hasWonInAnyRow({ board, marker }) {
   for (let i = 0; i < 3; i += 1) {
     if (hasWonInRow({ row: board[i], marker })) {
       return true;
@@ -14,7 +14,7 @@ function hasWonInAnyRow({ board, marker }) {
   return false;
 }
 
-function hasWonInAnyColumn({ board, marker }) {
+export function hasWonInAnyColumn({ board, marker }) {
   for (let i = 0; i < 3; i += 1) {
     let sameMarkerInARowCount = 0;
 
@@ -34,7 +34,7 @@ function hasWonInAnyColumn({ board, marker }) {
   return false;
 }
 
-function hasWonInAnyDiagonal({ board, marker }) {
+export function hasWonInAnyDiagonal({ board, marker }) {
   let leftToRightInARow = 0;
   let rightToLeftInARow = 0;
 
@@ -51,7 +51,7 @@ function hasWonInAnyDiagonal({ board, marker }) {
   return leftToRightInARow === 3 || rightToLeftInARow === 3;
 }
 
-function isAllBoardFilled(board) {
+export function isAllBoardFilled(board) {
   return board.flat().filter(item => item).length === 9;
 }
 
