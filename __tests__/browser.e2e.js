@@ -41,6 +41,25 @@ test('"X" should win the game', async () => {
   expect(await getWinnerMessage()).toBe(`${player1} won!!`);
 });
 
+test('"O" should win the game', async () => {
+  const p1 = 'A';
+  const p2 = 'B';
+
+  await navigate();
+
+  await newGame(p1, p2);
+
+  await clickACellAt(3);
+  await clickACellAt(0);
+  expect(await hasWinner()).toBe(false);
+  await clickACellAt(4);
+  await clickACellAt(1);
+  await clickACellAt(5);
+  await clickACellAt(2);
+
+  expect(await getWinnerMessage()).toBe(`${p2} won!!`);
+});
+
 test('should mark fields differently for each player', async () => {
   const p1 = 'A';
   const p2 = 'B';

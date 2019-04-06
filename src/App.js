@@ -27,8 +27,10 @@ function App() {
 
     _board[rowIndex][colIndex] = firstPlayerActive ? 'X' : 'O';
 
-    if (gameStatus(_board) === 'X') {
-      setWinner('X');
+    const gameWinner = gameStatus(_board);
+
+    if (gameWinner) {
+      setWinner(gameWinner);
     }
 
     setBoard(_board);
@@ -44,7 +46,11 @@ function App() {
         board={board}
         onCellClicked={handleCellClicked}
       />
-      {winner && <div data-testid="winner-message">Yaniv won!!</div>}
+      {winner && (
+        <div data-testid="winner-message">
+          {winner === 'X' ? player1 : player2} won!!
+        </div>
+      )}
     </div>
   );
 }
