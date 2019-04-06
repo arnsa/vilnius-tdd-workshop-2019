@@ -32,13 +32,38 @@ function hasWonInAnyColumn({ board, marker }) {
   return false;
 }
 
-export function gameStatus(board) {
-  const p1Args = { board, marker: 'X' };
-  const p2Args = { board, marker: 'O' };
+function hasWonInAnyDiagonal({ board, marker }) {
+  let leftToRightInARow = 0;
+  let rightToLeftInARow = 0;
 
-  if (hasWonInAnyRow(p1Args) || hasWonInAnyColumn(p1Args)) {
+  for (let i = 0, j = 2; i < 3; i += 1, j -= 1) {
+    if (board[i][i] === marker) {
+      leftToRightInARow += 1;
+    }
+
+    if (board[i][j] === marker) {
+      rightToLeftInARow += 1;
+    }
+  }
+
+  return leftToRightInARow === 3 || rightToLeftInARow === 3;
+}
+
+export function gameStatus(board) {
+  const player1Args = { board, marker: 'X' };
+  const player2Args = { board, marker: 'O' };
+  const hasPlayer1Won =
+    hasWonInAnyRow(player1Args) ||
+    hasWonInAnyColumn(player1Args) ||
+    hasWonInAnyDiagonal(player1Args);
+  const hasPlayer2Won =
+    hasWonInAnyRow(player2Args) ||
+    hasWonInAnyColumn(player2Args) ||
+    hasWonInAnyDiagonal(player2Args);
+
+  if (hasPlayer1Won) {
     return 'X';
-  } else if (hasWonInAnyRow(p2Args) || hasWonInAnyColumn(p2Args)) {
+  } else if (hasPlayer2Won) {
     return 'O';
   }
 }
