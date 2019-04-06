@@ -37,17 +37,20 @@ function App() {
     setBoard(_board);
     setFirstPlayerActive(!firstPlayerActive);
   };
+  const gameStarted = !!(player1 && player2);
 
   return (
     <div className="App">
-      <Registration onNewGame={handleNewGame} />
-      <Game
-        player1={player1}
-        player2={player2}
-        board={board}
-        firstPlayerActive={firstPlayerActive}
-        onCellClicked={handleCellClicked}
-      />
+      {!gameStarted && <Registration onNewGame={handleNewGame} />}
+      {gameStarted && (
+        <Game
+          player1={player1}
+          player2={player2}
+          board={board}
+          firstPlayerActive={firstPlayerActive}
+          onCellClicked={handleCellClicked}
+        />
+      )}
       {winner && (
         <div data-testid="winner-message">
           {winner === GAME_STATUSES.PLAYER1_WON && `${player1} won!!`}

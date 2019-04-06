@@ -4,7 +4,7 @@ export function Registration({ onNewGame }) {
   const [player2, setPlayer2] = useState('');
 
   return (
-    <div>
+    <div data-testid="registration-form">
       <input
         data-testid="player1"
         onChange={evt => setPlayer1(evt.target.value)}

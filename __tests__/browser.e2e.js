@@ -175,6 +175,40 @@ test('should say it is a tie game', async () => {
   expect(await getWinnerMessage()).toBe('It is a tie game');
 });
 
+test('should not show game board if there are no players', async () => {
+  await navigate();
+
+  expect(await isGameBoardVisible()).toBe(false);
+});
+
+test('should show game board if there are players', async () => {
+  const p1 = 'A';
+  const p2 = 'B';
+
+  await navigate();
+
+  await newGame(p1, p2);
+
+  expect(await isGameBoardVisible()).toBe(true);
+});
+
+test('should not show registration form if there are players', async () => {
+  const p1 = 'A';
+  const p2 = 'B';
+
+  await navigate();
+
+  await newGame(p1, p2);
+
+  expect(await isRegistrationFormVisible()).toBe(false);
+});
+
+test('should show registration form if there are no players', async () => {
+  await navigate();
+
+  expect(await isRegistrationFormVisible()).toBe(true);
+});
+
 test('should mark fields differently for each player', async () => {
   const p1 = 'A';
   const p2 = 'B';
@@ -208,6 +242,14 @@ test('should not let click on already clicked field', async () => {
   await clickACellAt(0);
   expect(await getACellAt(0)).toBe('X');
 });
+
+async function isGameBoardVisible() {
+  return !!(await page.$('[data-testid="game-board"]'));
+}
+
+async function isRegistrationFormVisible() {
+  return !!(await page.$('[data-testid="registration-form"]'));
+}
 
 function getWinnerMessage() {
   return page.$eval('[data-testid="winner-message"]', el => el.innerText);

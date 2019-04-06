@@ -7,7 +7,7 @@ export const Game = ({
   onCellClicked
 }) => {
   return (
-    <div>
+    <div data-testid="game-board">
       <p
         data-testid="player1-title"
         style={firstPlayerActive ? { fontWeight: 'bold' } : null}
