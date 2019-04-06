@@ -19,11 +19,18 @@ function App() {
     setPlayer2(player2);
   };
   const handleCellClicked = (rowIndex, colIndex) => {
+    if (board[rowIndex][colIndex]) {
+      return;
+    }
+
     const _board = board.map(row => [...row]);
+
     _board[rowIndex][colIndex] = firstPlayerActive ? 'X' : 'O';
+
     if (gameStatus(_board) === 'X') {
       setWinner('X');
     }
+
     setBoard(_board);
     setFirstPlayerActive(!firstPlayerActive);
   };

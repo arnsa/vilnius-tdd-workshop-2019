@@ -62,6 +62,19 @@ test('should mark fields differently for each player', async () => {
   expect(await getACellAt(5)).toBe('O');
 });
 
+test('should not let click on already clicked field', async () => {
+  const p1 = 'A';
+  const p2 = 'B';
+
+  await navigate();
+  await newGame(p1, p2);
+  expect(await getACellAt(0)).toBe('');
+  await clickACellAt(0);
+  expect(await getACellAt(0)).toBe('X');
+  await clickACellAt(0);
+  expect(await getACellAt(0)).toBe('X');
+});
+
 function getWinnerMessage() {
   return page.$eval('[data-testid="winner-message"]', el => el.innerText);
 }
