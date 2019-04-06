@@ -1,3 +1,5 @@
+import { GAME_STATUSES } from './gameService.const';
+
 function hasWonInRow({ row, marker }) {
   return row.every(cell => cell === marker);
 }
@@ -49,6 +51,10 @@ function hasWonInAnyDiagonal({ board, marker }) {
   return leftToRightInARow === 3 || rightToLeftInARow === 3;
 }
 
+function isAllBoardFilled(board) {
+  return board.flat().filter(item => item).length === 9;
+}
+
 export function gameStatus(board) {
   const player1Args = { board, marker: 'X' };
   const player2Args = { board, marker: 'O' };
@@ -62,8 +68,10 @@ export function gameStatus(board) {
     hasWonInAnyDiagonal(player2Args);
 
   if (hasPlayer1Won) {
-    return 'X';
+    return GAME_STATUSES.PLAYER1_WON;
   } else if (hasPlayer2Won) {
-    return 'O';
+    return GAME_STATUSES.PLAYER2_WON;
+  } else if (isAllBoardFilled(board)) {
+    return GAME_STATUSES.TIE;
   }
 }

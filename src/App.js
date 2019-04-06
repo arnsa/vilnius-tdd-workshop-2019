@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Registration } from './Registration';
 import { Game } from './Game';
 import { gameStatus } from './gameService';
+import { GAME_STATUSES } from './gameService.const';
 
 function App() {
   const [player1, setPlayer1] = useState('');
@@ -48,7 +49,9 @@ function App() {
       />
       {winner && (
         <div data-testid="winner-message">
-          {winner === 'X' ? player1 : player2} won!!
+          {winner === GAME_STATUSES.PLAYER1_WON && `${player1} won!!`}
+          {winner === GAME_STATUSES.PLAYER2_WON && `${player2} won!!`}
+          {winner === GAME_STATUSES.TIE && 'It is a tie game'}
         </div>
       )}
     </div>

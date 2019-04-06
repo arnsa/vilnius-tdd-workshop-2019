@@ -154,6 +154,27 @@ test('"O" should win the game in diagonal from right to left', async () => {
   expect(await getWinnerMessage()).toBe(`${p2} won!!`);
 });
 
+test('should say it is a tie game', async () => {
+  const p1 = 'A';
+  const p2 = 'B';
+
+  await navigate();
+
+  await newGame(p1, p2);
+
+  await clickACellAt(0);
+  await clickACellAt(2);
+  await clickACellAt(1);
+  await clickACellAt(3);
+  await clickACellAt(4);
+  await clickACellAt(7);
+  await clickACellAt(5);
+  await clickACellAt(8);
+  await clickACellAt(6);
+
+  expect(await getWinnerMessage()).toBe('It is a tie game');
+});
+
 test('should mark fields differently for each player', async () => {
   const p1 = 'A';
   const p2 = 'B';
