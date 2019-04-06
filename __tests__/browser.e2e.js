@@ -175,6 +175,49 @@ test('should say it is a tie game', async () => {
   expect(await getWinnerMessage()).toBe('It is a tie game');
 });
 
+test('should not let click any more cells if game is finished', async () => {
+  const p1 = 'A';
+  const p2 = 'B';
+
+  await navigate();
+
+  await newGame(p1, p2);
+
+  await clickACellAt(0);
+  await clickACellAt(2);
+  expect(await hasWinner()).toBe(false);
+  await clickACellAt(4);
+  await clickACellAt(3);
+  await clickACellAt(8);
+  await clickACellAt(1);
+
+  expect(await getACellAt(1)).toBe('');
+});
+
+test('should have restart button that restarts the game when game is finished', async () => {
+  const p1 = 'A';
+  const p2 = 'B';
+
+  await navigate();
+
+  await newGame(p1, p2);
+
+  await clickACellAt(0);
+  await clickACellAt(2);
+  await clickACellAt(4);
+  await clickACellAt(3);
+  await clickACellAt(8);
+
+  expect(await getACellAt(0)).toBe('X');
+  expect(await hasRestartButton()).toBe(true);
+
+  const restartButton = await getRestartButton();
+
+  await restartButton.click();
+  expect(await getACellAt(0)).toBe('');
+  expect(await hasWinner()).toBe(false);
+});
+
 test('should not show game board if there are no players', async () => {
   await navigate();
 
@@ -243,6 +286,10 @@ test('should not let click on already clicked field', async () => {
   expect(await getACellAt(0)).toBe('X');
 });
 
+async function hasRestartButton() {
+  return !!(await page.$('[data-testid="restart-button"]'));
+}
+
 async function isGameBoardVisible() {
   return !!(await page.$('[data-testid="game-board"]'));
 }
@@ -257,6 +304,10 @@ function getWinnerMessage() {
 
 async function hasWinner() {
   return !!(await page.$('[data-testid="winner-message"]'));
+}
+
+function getRestartButton() {
+  return page.$('[data-testid="restart-button"');
 }
 
 function clickACellAt(index) {
